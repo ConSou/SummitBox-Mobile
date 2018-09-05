@@ -1,6 +1,7 @@
 import React from 'react';
 import Landing from './components/Landing';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
 export default class App extends React.Component {
   render() {
