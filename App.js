@@ -1,6 +1,7 @@
 import React from 'react';
 import Landing from './components/Landing';
 import LoginScreen from './components/LoginScreen';
+import SignupScreen from './components/SignupScreen';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import {StackNavigator} from 'react-navigation';
@@ -22,6 +23,12 @@ const AppNavigator = createStackNavigator({
   },
   Login: {
     screen: LoginScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Signup: {
+    screen: SignupScreen,
     navigationOptions: {
       header: null
     }
