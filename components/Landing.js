@@ -1,17 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
-const Landing = () => {
+class Landing extends React.Component {
+
+  render(){
     return (
       <ImageBackground source={require('../images/Landing3.jpg')} style={{width: '100%', height: '100%'}} resizeMode='cover' >
         <Text style={styles.text}> SummitBox </Text>
-        <Button onPress={this.goLogIn} title="Send It!" />
+        <Button onPress={() => this.props.navigation.navigate('Login')} title="Send It!" />
       </ImageBackground>
     );
-}
-
-goLogIn = () => {
-
+  }
 }
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Landing;
+export default withNavigation(Landing);
 
     // flex: 1,
     // justifyContent: 'center',
