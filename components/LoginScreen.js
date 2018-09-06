@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Button, TextInput  } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { AsyncStorage } from "react-native"
 
 class LoginScreen extends Component{
   constructor(props){
@@ -8,8 +9,29 @@ class LoginScreen extends Component{
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      signinSuccess: false,
+      userId: null
     }
+  }
+
+  _storeData = async (userInfo) => {
+  try {
+    await AsyncStorage.setItem(userInfo, userInfo);
+  } catch (error) {
+    console.warn(error.message);
+  }
+  }
+
+  _retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      console.warn(value);
+  }
+  } catch (error) {
+     console.warn(error);
+  }
   }
 
   textChange = (text, field) => {
@@ -21,10 +43,7 @@ class LoginScreen extends Component{
     let email = this.state.email
     let password = this.state.password
 
-    console.warn(email)
-    console.warn(password)
-
-    fetch('http://localhost:3001/v1/sessions/', {
+    fetch('http://906db3b8.ngrok.io/v1/sessions/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -37,13 +56,12 @@ class LoginScreen extends Component{
     })
     .then(response => response.json())
     .then(json => {
-      console.warn(json.data)
-    //   // localStorage.setItem('token', json.data.user.authentication_token);
-    //   // localStorage.setItem('email', json.data.user.email);
-    //   // localStorage.setItem('id', json.data.user.id);
-    //   // this.setState({ signedIn: true, userId: json.data.user.id})
+      this._storeData(json.data.user.id.toString())
+      this._storeData(json.data.user.email)
+      this._storeData(json.data.user.authentication_token)
+      this.setState({ signinSuccess: true, userId: json.data.user.id})
      })
-    //.catch(error => console.warn(error))
+    .catch(error => console.warn(error))
   }
 
   render(){
