@@ -13,6 +13,14 @@ class Landing extends React.Component {
         onPress={() => this.props.navigation.navigate('Login')}
         title="Send It!"
         buttonStyle={styles.button}/>
+
+        <Button
+        onPress={() => this.props.navigation.navigate('Info')}
+        title="info"
+        style={styles.iButton}
+        transparent={true}
+        color='blue' />
+
       </View>
     );
   }
@@ -38,7 +46,11 @@ const styles = StyleSheet.create({
       borderColor: "transparent",
       borderWidth: 0,
       borderRadius: 5
-      }
+    },
+    iButton: {
+      height: 100,
+      width: 100
+    }
 });
 
 export default withNavigation(Landing);

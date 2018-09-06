@@ -41,10 +41,10 @@ class LoginScreen extends Component{
 
   submitSignIn = () => {
 
-    let email = this.state.email
+    let email = this.state.email.toLowerCase()
     let password = this.state.password
 
-    fetch('http://906db3b8.ngrok.io/v1/sessions/', {
+    fetch('https://6fe09b31.ngrok.io/v1/sessions/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -57,12 +57,14 @@ class LoginScreen extends Component{
     })
     .then(response => response.json())
     .then(json => {
+      console.warn(json.data)
       this._storeData(json.data.user.id.toString())
       this._storeData(json.data.user.email)
       this._storeData(json.data.user.authentication_token)
       this.setState({ signinSuccess: true, userId: json.data.user.id})
      })
     .catch(error => console.warn(error))
+    alert('You have signed in!')
   }
 
   render(){

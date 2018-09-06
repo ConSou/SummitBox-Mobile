@@ -3,28 +3,75 @@ import { StyleSheet, Text, View  } from 'react-native';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class SignupScreen extends Component{
+  constructor(props){
+    super(props)
+
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      passwordConfirm: ''
+    }
+  }
+
+  textChange = (text, field) => {
+    this.setState({ [field]: text })
+  }
+
+  submitSignUp = () => {
+    let firstName = this.state.firstName
+    let lastName = this.state.lastName
+    let email = this.state.email.toLowerCase()
+    let password = this.state.password
+    let passwordConfirm = this.state.passwordConfirm
+
+    fetch('https://6fe09b31.ngrok.io/v1/users/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: {
+          email: email,
+          password: password,
+          password_confirmation: passwordConfirm,
+          first_name: firstName,
+          last_name: lastName
+        }
+      })
+  })
+  .then(response => response.json())
+  .then(json =>
+    console.warn(json.data)
+    )
+    alert('You have signed up!')
+  }
+
   render(){
     return (
       <View>
         <Text style={styles.text}> Welcome. </Text>
 
         <FormLabel> First Name </FormLabel>
-          <FormInput placeholder="Please enter first name..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'firstName')} placeholder="Please enter first name..." />
 
         <FormLabel> Last Name </FormLabel>
-          <FormInput placeholder="Please enter last name..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'lastName')} placeholder="Please enter last name..." />
 
         <FormLabel> Email </FormLabel>
-          <FormInput placeholder="Please enter email..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter email..." />
 
         <FormLabel> Password </FormLabel>
-          <FormInput placeholder="Select a password..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'password')} placeholder="Select a password..." />
 
         <FormLabel> Password Confirmation </FormLabel>
-          <FormInput placeholder="Confirm password..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'passwordConfirm')} placeholder="Confirm password..." />
 
         <View style={styles.container}>
           <Button
+          onPress={this.submitSignUp}
           title="Sign Up"
           buttonStyle={styles.button} />
         </View>

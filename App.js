@@ -2,6 +2,7 @@ import React from 'react';
 import Landing from './components/Landing';
 import LoginScreen from './components/LoginScreen';
 import SignupScreen from './components/SignupScreen';
+import InfoScreen from './components/InfoScreen';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import {StackNavigator} from 'react-navigation';
@@ -32,6 +33,9 @@ const AppNavigator = createStackNavigator({
     // navigationOptions: {
     //   header: null
     // }
+  },
+  Info: {
+    screen: InfoScreen
   }
 })
 
