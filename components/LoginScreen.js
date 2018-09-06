@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Button, TextInput  } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from "react-native";
+import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class LoginScreen extends Component{
   constructor(props){
@@ -66,17 +67,29 @@ class LoginScreen extends Component{
 
   render(){
     return (
-      <ImageBackground source={require('../images/Signup.jpg')} style={{width: '100%', height: '100%'}} resizeMode='cover' >
+      <View>
         <Text style={styles.text}> Sign In. </Text>
 
-        <TextInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Email" />
-        <TextInput onChangeText={(text) => this.textChange(text, 'password')} placeholder="Password" />
-        <Button onPress={this.submitSignIn} title="Sign In" />
+        <FormLabel> Email </FormLabel>
+        <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter your email..." />
+        <FormLabel> Password </FormLabel>
+        <FormInput onChangeText={(text) => this.textChange(text, 'password')} placeholder="Please enter your password..." />
 
-        <Text style={styles.smlTxt}> or </Text>
+        <View style={styles.container}>
+          <Button
+            onPress={this.submitSignIn}
+            title="Sign In"
+            buttonStyle={styles.button}/>
 
-        <Button onPress={() => this.props.navigation.navigate('Signup')} title="Sign Up" />
-      </ImageBackground>
+          <Text style={styles.smlTxt}> or </Text>
+
+          <Button
+            onPress={() => this.props.navigation.navigate('Signup')}
+            title="Sign Up"
+            transparent={true}
+            color="blue"/>
+        </View>
+      </View>
     );
   }
 }
@@ -84,6 +97,9 @@ class LoginScreen extends Component{
 export default withNavigation(LoginScreen)
 
 const styles = StyleSheet.create({
+  container: {
+      alignItems: 'center'
+  },
   text: {
       textAlign: 'center',
       color: 'black',
@@ -95,5 +111,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
     backgroundColor: 'rgba(0,0,0,0)'
-  }
+  },
+  button: {
+    backgroundColor: "rgba(92, 99,216, 1)",
+    width: 300,
+    height: 45,
+    marginTop: 25,
+    marginBottom: 10,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 5
+    }
 });
+
+//<ImageBackground source={require('../images/Signup.jpg')} style={{width: '100%', height: '100%', alignItems: 'center'}} resizeMode='cover' >
+//</ImageBackground>
