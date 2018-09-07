@@ -26,7 +26,7 @@ class SignupScreen extends Component{
     let password = this.state.password
     let passwordConfirm = this.state.passwordConfirm
 
-    fetch('https://6fe09b31.ngrok.io/v1/users/', {
+    fetch('http://af640f24.ngrok.io/v1/users/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -42,11 +42,18 @@ class SignupScreen extends Component{
         }
       })
   })
-  .then(response => response.json())
-  .then(json =>
-    console.warn(json.data)
-    )
-    alert('You have signed up!')
+  .then(response => {
+    if(response.status == 200){
+      alert('You have signed up!')
+      return response.json()
+    }else{
+      alert("There was an issue creating your account.  Please try again.")
+    }
+  })
+  // .then(json =>
+  //   console.warn(json.data)
+  //   )
+    .catch(error => console.warn(error))
   }
 
   render(){

@@ -16,9 +16,16 @@ class LoginScreen extends Component{
     }
   }
 
-  _storeData = async (userInfo) => {
+  // componentWillMount(){
+  //   let email = this._retrieveData('email')
+  //   if(email){
+  //     this.props.navigation.navigate('Profile')
+  //   }
+  // }
+
+  _storeData = async (userInfo, title) => {
   try {
-    await AsyncStorage.setItem(userInfo, userInfo);
+    await AsyncStorage.setItem(title, userInfo);
   } catch (error) {
     console.warn(error.message);
   }
@@ -44,7 +51,7 @@ class LoginScreen extends Component{
     let email = this.state.email.toLowerCase()
     let password = this.state.password
 
-    fetch('https://6fe09b31.ngrok.io/v1/sessions/', {
+    fetch('http://af640f24.ngrok.io/v1/sessions/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -55,19 +62,33 @@ class LoginScreen extends Component{
         password: password
       })
     })
-    .then(response => response.json())
+    .then(response => {
+      if(response.status == 201){
+        return response.json()
+      }else{
+      alert('Incorrect email or password entered.  Please try again')
+    }
+    })
     .then(json => {
+      if(json){
       console.warn(json.data)
-      this._storeData(json.data.user.id.toString())
-      this._storeData(json.data.user.email)
-      this._storeData(json.data.user.authentication_token)
+      this._storeData(json.data.user.id.toString(), "id")
+      this._storeData(json.data.user.email, "email")
+      this._storeData(json.data.user.authentication_token, "authentication_token")
       this.setState({ signinSuccess: true, userId: json.data.user.id})
+      this.setState({ signinSuccess: true })
+      alert(`Welcome back ${json.data.user.first_name}.`)
+    }
      })
     .catch(error => console.warn(error))
-    alert('You have signed in!')
+    //alert('You have signed in!')
   }
 
   render(){
+    // if(this.state.signinSuccess){
+    //   this.setState({ signinSuccess: false })
+    //   this.props.navigation.navigate('Profile')
+    // }
     return (
       <View>
         <Text style={styles.text}> Sign In. </Text>
