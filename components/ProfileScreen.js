@@ -1,31 +1,80 @@
 import React from 'react';
 import { AsyncStorage } from "react-native";
 import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 class ProfileScreen extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      name: '',
+      city: '',
+      state: '',
+      country: '',
+      bio: '',
+      email: '',
+      auth_tok: ''
+    }
+  }
 
   _retrieveData = async (key) => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      //console.warn(value);
+      //console.warn(value)
+      return value;
   }
   } catch (error) {
-     console.warn(error);
+     //console.warn(error);
   }
   }
 
+  signOut = () => {
+    AsyncStorage.removeItem('userObj')
+    alert("You have Signed Out")
+    this.props.navigation.navigate('Landing')
+
+    fetch('https://a2b6a7c7.ngrok.io/v1/sessions/', {
+      method: 'DELETE',
+      headers: {
+        'X-User-Token': this.state.auth_tok,
+        'X-User-Email': this.state.email
+      }
+    })
+    .catch(error => console.warn(error))
+
+  }
+
+
   componentWillMount(){
-    let userData = this._retrieveData('userObj')
-    //let userObject = JSON.parse(userData)
-    //console.warn(userObject)
+    this._retrieveData('userObj')
+    .then((value) => {
+      let parseValue = JSON.parse(value)
+      this.setState({ name: `${parseValue.first_name} ${parseValue.last_name}`,
+        city: parseValue.city,
+        state: parseValue.state,
+        country: parseValue.country,
+        bio: parseValue.bio,
+        email: parseValue.email,
+        auth_tok: parseValue.authentication_token
+      })
+    })
+
+
   }
 
   render(){
     return (
       <View style={styles.container}>
-        <Text style={styles.text}> Profile. </Text>
+        <Text style={styles.text}> {this.state.name} </Text>
+        <Text> {this.state.city} | {this.state.state} | {this.state.country} </Text>
+        <Button
+        title="Sign Out"
+        onPress={() => this.signOut()}
+        transparent={true}
+        color='blue' />
       </View>
     );
   }
@@ -43,5 +92,6 @@ const styles = StyleSheet.create({
         marginTop: 250
     }
 });
+
 
 export default withNavigation(ProfileScreen);

@@ -1,9 +1,31 @@
 import React from 'react';
+import { AsyncStorage } from "react-native";
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 class Landing extends React.Component {
+
+  _retrieveData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null) {
+      //console.warn(value)
+      return value;
+  }
+  } catch (error) {
+     //console.warn(error);
+  }
+  }
+
+  componentWillMount(){
+    this._retrieveData('userObj')
+    .then((value) => {
+      if(value){
+        this.props.navigation.navigate('Profile')
+      }
+    })
+  }
 
   render(){
     return (

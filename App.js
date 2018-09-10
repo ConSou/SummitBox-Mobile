@@ -42,7 +42,8 @@ const AppNavigator = createStackNavigator({
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false
     }
   }
 })
