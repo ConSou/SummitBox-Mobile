@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { Header } from 'react-navigation';
 
+
 class SignupScreen extends Component{
   constructor(props){
     super(props)
@@ -15,7 +16,14 @@ class SignupScreen extends Component{
       password: '',
       passwordConfirm: ''
     }
+
+    this.focusNextField = this.focusNextField.bind(this);
+    this.inputs = {};
   }
+
+  focusNextField(id) {
+   this.inputs[id].focus();
+ }
 
   textChange = (text, field) => {
     this.setState({ [field]: text })
@@ -67,19 +75,66 @@ class SignupScreen extends Component{
         <Text style={styles.text}> Welcome. </Text>
 
         <FormLabel> First Name </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'firstName')} placeholder="Please enter first name..." />
+          <FormInput
+            onChangeText={(text) => this.textChange(text, 'firstName')}
+            placeholder="Please enter first name..."
+            onSubmitEditing={() => {
+              this.focusNextField('two');
+            }}
+            returnKeyType={ "next" }
+            ref={ input => {
+              this.inputs['one'] = input;
+            }} />
 
         <FormLabel> Last Name </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'lastName')} placeholder="Please enter last name..." />
+          <FormInput
+            onChangeText={(text) => this.textChange(text, 'lastName')}
+            placeholder="Please enter last name..."
+            onSubmitEditing={() => {
+              this.focusNextField('three');
+            }}
+            returnKeyType={ "next" }
+            ref={ input => {
+              this.inputs['two'] = input;
+            }} />
 
         <FormLabel> Email </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter email..." />
+          <FormInput
+            onChangeText={(text) => this.textChange(text, 'email')}
+            placeholder="Please enter email..."
+            onSubmitEditing={() => {
+              this.focusNextField('four');
+            }}
+            returnKeyType={ "next" }
+            ref={ input => {
+              this.inputs['three'] = input;
+            }} />
 
         <FormLabel> Password </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'password')} secureTextEntry={true} placeholder="Select a password..." />
+          <FormInput
+            onChangeText={(text) => this.textChange(text, 'password')}
+            secureTextEntry={true}
+            placeholder="Select a password..."
+            onSubmitEditing={() => {
+              this.focusNextField('five');
+            }}
+            returnKeyType={ "next" }
+            ref={ input => {
+              this.inputs['four'] = input;
+            }} />
 
         <FormLabel> Password Confirmation </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'passwordConfirm')} secureTextEntry={true} placeholder="Confirm password..." />
+          <FormInput
+            onChangeText={(text) => this.textChange(text, 'passwordConfirm')}
+            secureTextEntry={true}
+            placeholder="Confirm password..."
+            onSubmitEditing={() => {
+              this.submitSignUp();
+            }}
+            returnKeyType={ "done" }
+            ref={ input => {
+              this.inputs['five'] = input;
+            }} />
 
         <View style={styles.container}>
           <Button

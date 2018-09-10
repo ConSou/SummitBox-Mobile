@@ -14,7 +14,14 @@ class LoginScreen extends Component{
       signinSuccess: false,
       userId: null
     }
+
+    this.focusNextField = this.focusNextField.bind(this);
+    this.inputs = {};
   }
+
+  focusNextField(id) {
+   this.inputs[id].focus();
+ }
 
   // componentWillMount(){
   //   let email = this._retrieveData('email')
@@ -99,9 +106,30 @@ class LoginScreen extends Component{
         <Text style={styles.text}> Sign In. </Text>
 
         <FormLabel> Email </FormLabel>
-        <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter your email..." value={this.state.email} />
+        <FormInput
+          onChangeText={(text) => this.textChange(text, 'email')}
+          placeholder="Please enter your email..."
+          value={this.state.email}
+          onSubmitEditing={() => {
+            this.focusNextField('two');
+          }}
+          returnKeyType={ "next" }
+          ref={ input => {
+            this.inputs['one'] = input;
+          }} />
+
         <FormLabel> Password </FormLabel>
-        <FormInput onChangeText={(text) => this.textChange(text, 'password')} secureTextEntry={true} placeholder="Please enter your password..." value={this.state.password} />
+        <FormInput
+          onChangeText={(text) => this.textChange(text, 'password')}
+          secureTextEntry={true} placeholder="Please enter your password..."
+          value={this.state.password}
+          onSubmitEditing={() => {
+            this.submitSignIn();
+          }}
+          returnKeyType={ "done" }
+          ref={ input => {
+            this.inputs['two'] = input;
+          }} />
 
         <View style={styles.container}>
           <Button
