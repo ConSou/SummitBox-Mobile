@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View  } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Header } from 'react-navigation';
 
 class SignupScreen extends Component{
   constructor(props){
@@ -58,7 +60,10 @@ class SignupScreen extends Component{
 
   render(){
     return (
-      <View>
+      <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={true}
+    >
         <Text style={styles.text}> Welcome. </Text>
 
         <FormLabel> First Name </FormLabel>
@@ -71,10 +76,10 @@ class SignupScreen extends Component{
           <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter email..." />
 
         <FormLabel> Password </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'password')} placeholder="Select a password..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'password')} secureTextEntry={true} placeholder="Select a password..." />
 
         <FormLabel> Password Confirmation </FormLabel>
-          <FormInput onChangeText={(text) => this.textChange(text, 'passwordConfirm')} placeholder="Confirm password..." />
+          <FormInput onChangeText={(text) => this.textChange(text, 'passwordConfirm')} secureTextEntry={true} placeholder="Confirm password..." />
 
         <View style={styles.container}>
           <Button
@@ -82,7 +87,7 @@ class SignupScreen extends Component{
           title="Sign Up"
           buttonStyle={styles.button} />
         </View>
-      </View>
+          </KeyboardAwareScrollView>
     );
   }
 }

@@ -35,7 +35,7 @@ class LoginScreen extends Component{
   try {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      console.warn(value);
+      //console.warn(value);
   }
   } catch (error) {
      console.warn(error);
@@ -67,6 +67,8 @@ class LoginScreen extends Component{
         return response.json()
       }else{
       alert('Incorrect email or password entered.  Please try again')
+      this.setState({ email: '' })
+      this.setState({ password: '' })
     }
     })
     .then(json => {
@@ -75,9 +77,12 @@ class LoginScreen extends Component{
       this._storeData(json.data.user.id.toString(), "id")
       this._storeData(json.data.user.email, "email")
       this._storeData(json.data.user.authentication_token, "authentication_token")
+      this._storeData(JSON.stringify(json.data.user), "userObj")
       this.setState({ signinSuccess: true, userId: json.data.user.id})
       this.setState({ signinSuccess: true })
       alert(`Welcome back ${json.data.user.first_name}.`)
+      this.props.navigation.navigate('Profile')
+
     }
      })
     .catch(error => console.warn(error))
@@ -94,9 +99,9 @@ class LoginScreen extends Component{
         <Text style={styles.text}> Sign In. </Text>
 
         <FormLabel> Email </FormLabel>
-        <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter your email..." />
+        <FormInput onChangeText={(text) => this.textChange(text, 'email')} placeholder="Please enter your email..." value={this.state.email} />
         <FormLabel> Password </FormLabel>
-        <FormInput onChangeText={(text) => this.textChange(text, 'password')} placeholder="Please enter your password..." />
+        <FormInput onChangeText={(text) => this.textChange(text, 'password')} secureTextEntry={true} placeholder="Please enter your password..." value={this.state.password} />
 
         <View style={styles.container}>
           <Button

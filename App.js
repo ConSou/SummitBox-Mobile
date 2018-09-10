@@ -31,9 +31,10 @@ const AppNavigator = createStackNavigator({
   },
   Signup: {
     screen: SignupScreen,
-    // navigationOptions: {
-    //   header: null
-    // }
+    navigationOptions: {
+      header: null,
+      gesturesEnabled: true,
+    }
   },
   Info: {
     screen: InfoScreen
