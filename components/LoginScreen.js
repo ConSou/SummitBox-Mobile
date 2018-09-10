@@ -51,7 +51,7 @@ class LoginScreen extends Component{
     let email = this.state.email.toLowerCase()
     let password = this.state.password
 
-    fetch('http://af640f24.ngrok.io/v1/sessions/', {
+    fetch('https://a2b6a7c7.ngrok.io/v1/sessions/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
