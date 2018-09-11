@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "expo": "^27.0.1",
+    "navigationbar-react-native": "0.0.3",
     "react": "16.3.1",
     "react-native": "^0.55.3",
     "react-native-elements": "^0.19.1",

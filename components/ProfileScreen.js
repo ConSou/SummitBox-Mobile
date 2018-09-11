@@ -61,9 +61,17 @@ class ProfileScreen extends React.Component {
         auth_tok: parseValue.authentication_token
       })
     })
-
-
   }
+
+//   const ComponentRight = () => {
+//   return(
+//     <View style={{ flex: 1, alignItems: 'flex-end', }}>
+//       <TouchableOpacity>
+//         <Text style={{ color: 'white', }}> Right </Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// }
 
   render(){
     return (
@@ -73,6 +81,11 @@ class ProfileScreen extends React.Component {
         <Button
         title="Sign Out"
         onPress={() => this.signOut()}
+        transparent={true}
+        color='blue' />
+        <Button
+        title="Edit"
+        //onPress={() => this.signOut()}
         transparent={true}
         color='blue' />
       </View>
