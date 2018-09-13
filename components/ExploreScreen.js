@@ -2,7 +2,7 @@ import React from 'react';
 import BottomNav from './BottomNav';
 import { AsyncStorage } from "react-native";
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 class ExploreScreen extends React.Component {
   constructor(props){
@@ -66,6 +66,10 @@ class ExploreScreen extends React.Component {
     this.setState({ search: text })
   }
 
+  addPlan = () => {
+    console.warn("PlanADDED")
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -80,6 +84,17 @@ class ExploreScreen extends React.Component {
           <Button
             title="Search"
             onPress={this.searchGo}/>
+          <View>
+          {
+            this.state.searchResult ?
+            <View>
+            <Text> {this.state.searchResult[0].name} </Text>
+            <Button
+              title="Add to Planning"
+              onPress={this.addPlan} />
+              </View> : ""
+          }
+          </View>
           <BottomNav />
       </View>
     );
