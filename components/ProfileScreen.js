@@ -3,6 +3,7 @@ import { AsyncStorage } from "react-native";
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
+import BottomNav from './BottomNav'
 
 class ProfileScreen extends React.Component {
   constructor(props){
@@ -36,7 +37,7 @@ class ProfileScreen extends React.Component {
     alert("You have Signed Out")
     this.props.navigation.navigate('Landing')
 
-    fetch('https://a2b6a7c7.ngrok.io/v1/sessions/', {
+    fetch('https://7d767201.ngrok.io/v1/sessions/', {
       method: 'DELETE',
       headers: {
         'X-User-Token': this.state.auth_tok,
@@ -88,6 +89,9 @@ class ProfileScreen extends React.Component {
         //onPress={() => this.signOut()}
         transparent={true}
         color='blue' />
+        <View>
+          <BottomNav />
+        </View>
       </View>
     );
   }

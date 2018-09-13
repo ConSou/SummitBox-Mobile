@@ -36,7 +36,7 @@ class SignupScreen extends Component{
     let password = this.state.password
     let passwordConfirm = this.state.passwordConfirm
 
-    fetch('https://a2b6a7c7.ngrok.io/v1/users/', {
+    fetch(' https://7d767201.ngrok.io/v1/users/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

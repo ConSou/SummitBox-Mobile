@@ -4,6 +4,8 @@ import LoginScreen from './components/LoginScreen';
 import SignupScreen from './components/SignupScreen';
 import InfoScreen from './components/InfoScreen';
 import ProfileScreen from './components/ProfileScreen';
+import ExploreScreen from './components/ExploreScreen';
+import PlanScreen from './components/PlanScreen';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import {StackNavigator} from 'react-navigation';
@@ -45,7 +47,19 @@ const AppNavigator = createStackNavigator({
       header: null,
       gesturesEnabled: false
     }
-  }
+  },
+  Explore: {
+    screen: ExploreScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Plan: {
+    screen: PlanScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
 })
 
 const styles = StyleSheet.create({
