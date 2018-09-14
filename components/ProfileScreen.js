@@ -37,7 +37,7 @@ class ProfileScreen extends React.Component {
     alert("You have Signed Out")
     this.props.navigation.navigate('Landing')
 
-    fetch('https://7d767201.ngrok.io/v1/sessions/', {
+    fetch('http://cd33fbaf.ngrok.io/v1/sessions/', {
       method: 'DELETE',
       headers: {
         'X-User-Token': this.state.auth_tok,

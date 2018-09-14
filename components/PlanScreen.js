@@ -4,6 +4,30 @@ import BottomNav from './BottomNav'
 
 class PlanScreen extends React.Component {
 
+  constructor(props){
+    super(props)
+
+    this.state = {
+      myPlans: null
+    }
+  }
+
+  componentDidMount(){
+    fetch('http://cd33fbaf.ngrok.io/v1/plans/', {
+    method: 'GET',
+    headers: {
+      'X-User-Token': 'A3Unsfy9dwwn6x8xJHAy',
+      'X-User-Email': 'the.coolest.test.user@gmail.com'
+    }})
+    .then(response => response.json())
+    .then(json => {
+      this.setState({ myPlans: json.data})
+      console.warn(this.state.myPlans)
+    })
+
+
+  }
+
   render(){
     return (
       <View style={styles.container}>

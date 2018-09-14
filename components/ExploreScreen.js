@@ -45,7 +45,7 @@ class ExploreScreen extends React.Component {
     console.warn(this.state.auth_tok)
     console.warn(this.state.email)
     //console.warn(mountianSearch)
-    fetch(`https://7d767201.ngrok.io/v1/mountians/${mountianSearch}`, {
+    fetch(`http://cd33fbaf.ngrok.io/v1/mountians/${mountianSearch}`, {
       method: 'GET',
       headers: {
         'X-User-Token': this.state.auth_tok,
@@ -67,8 +67,24 @@ class ExploreScreen extends React.Component {
   }
 
   addPlan = () => {
-    console.warn("PlanADDED")
-  }
+  console.warn(this.state.searchResult[0].id)
+
+  fetch('http://cd33fbaf.ngrok.io/v1/plans/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Token': this.state.auth_tok,
+      'X-User-Email': this.state.email
+    },
+    body: JSON.stringify({
+      mountian_id: this.state.searchResult[0].id
+    })
+  })
+    .then(response => response.json())
+    .then(json => console.warn(json.data))
+
+    
+}
 
   render(){
     return (
